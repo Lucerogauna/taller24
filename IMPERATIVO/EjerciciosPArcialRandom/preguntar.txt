@@ -1,0 +1,55 @@
+clase 20/8 preguntar
+vectores randomize se invoca en cada  modulo?
+{Preguntar como recorro la lista dentro del vector, si esta bien en P1E3
+p1e4 no entra en el escriir
+----------------------------------
+clase 23(8 
+vector eliminar rango P1E1
+-------------------------
+preguntar ejercicio 3 pract 1
+vector de punteros de listas de registros
+accedo con v[i].pri (seria la lista) pero para recorrer eso despues pierdo el puntero de pri
+consultar vector recursivo suma de los campos, E1P2, consultar incisoE
+consult recorrer e imprimir elementos del vector EN CUADERNO, DOS alternativas
+-----------------------------------------------------
+preguntat p2e2 function esta .
+p3e1 promedio de edades de socio. preguntar
+cuando inicalizo el arbol???
+cuando inicializo las listas que estan en los arboles P3E3
+datos que estan entre un rango??? (p4e1)
+preguntar P3e2 cuando dice campo fecha esta bien que sea integer?
+P3e3
+PREGUNTAR P4E1
+-------------
+3.9.
+ver resolucion de p4 buscar entre rangos y menor a (esta bien, analizar)
+preguntar p4e2 devuelve datos del socio mas chico
+-----------------
+4.9
+preguntar P4E3 inciso c
+max cant vendidas
+ //preguntar si van invertidos los if else . Caso limite en papel ver mas claro en modulos.pas
+-----------------
+6.9
+preguntar donde inicializ lista en caso de arbol con lista;
+preguntar P5e2-> inciso D incisoC y B
+preguntarP4E3 inciso C y E entre montos)=???
+P4E3 incisoC0
+P5e3 vector de arboles como recorro!!!! inciso B
+cuando hago a= nil //diferencias 
+-----------
+preguntar p5e4
+ejercicio PArcialrandom
+devolver estructura con ____ puede ser listas? o otro arbol??? rta: lista
+preguntar random entre rangos y random string????
+devolver un registrov 
+// NOTA:
+cada estsructura se debe recorrer eficientemente ---> es decir:
+ --->listas con un while
+ ---> arbol con un moduloo recursivo
+Random (LS-LI ) + 1
+ver programa num aleatorio
+
+
+preguntar p5e2 inciso c
+ver solucion p5e3 recorrer el arbol que esta en el vector 
