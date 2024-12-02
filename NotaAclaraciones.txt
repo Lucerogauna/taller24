@@ -1,0 +1,21 @@
+1. Verificación de habitación ocupada: Es importante primero verificar si la posición del array no es null antes de intentar invocar métodos sobre ella.
+
+2. Array en Java y sus índices
+En Java, cuando creas un array de tamaño N, los índices del array van de 0 a N-1. Esto significa que si creas un array de 5 elementos, puedes acceder a las posiciones 0, 1, 2, 3 y 4. Sin embargo, el valor de N se refiere a la cantidad total de elementos en el array, no a sus índices.Los índices van de 0 a N-1, por lo que el valor de N no necesita ser ajustado. El ajuste se hace al acceder al array (por ejemplo, restando 1 cuando es necesario).
+
+3. NOTA:  A pesar de que declaras el array de habitaciones en el constructor, no estás inicializando cada habitación individualmente, solo estás creando el array. {    this.habitaciones  = new Habitaciones[N];
+        setNum( N);// para saber la dim en aumentar habi o tiene que ser n-1??????????
+        for (int i = 0; i<N; i++) {
+            this.habitaciones[i] = new Habitaciones();
+        }
+Cada habitación es un objeto entonces lo tengo que crear O NO?????''
+¿Por qué no inicializar toda la matriz?
+Eficiencia de memoria: Si tienes una gran matriz y no todas las posiciones se llenarán con autos, sería ineficiente crear objetos en cada celda de la matriz. En este caso, es mejor tener celdas vacías (inicializadas en null) y solo crear objetos donde sea necesario.
+
+Simplicidad: Solo creas los objetos cuando es necesario. Así no ocupas memoria o procesamiento en crear autos para celdas vacías que no tendrán un auto.
+
+Solo inicializar donde sea necesario:
+Cuando recibes las posiciones (x, y) donde debe haber un auto, creas el objeto en esa posición de la matriz.
+ De lo contrario, las posiciones no usadas se mantendrán con valor null, lo cual está bien porque las celdas vacías representan lugares sin autos.
+
+Acordarse de no romper el encapsulamiento!!! cada uno hace lo suyo con sus getters and setters

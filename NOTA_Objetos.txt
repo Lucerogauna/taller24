@@ -1,0 +1,66 @@
+Abrir NetBeans -> new Project -> java-> java application
+Project name _ _ _
+Project location --
+
+Create mainClass :(Programa principal )
+//////////////////////////////OBJETOS ///////
+generar valores aleatorios entre rangos??
+preguntar p1e3 vector de laa suma de clumnas??''
+preguntar p2e2
+ptrguntar p1e3 matriz busco elemento hasta encontra¿ar
+NOTA: cuando es una matriz contador¿a es una buena practica inicializar en 0 toda la mtz
+///////////////////
+leer, como lee un tipo class, si uso solo una var esta leyendo siempre el mismo lugar de mem
+/////////////////////////
+preguntar EJ3 Pract 3 esta anotado en el main
+preguuntar ej4
+////////
+
+DRY dont repeat yourself
+cuando repetís código da indicio a que esta mal
+Super vs this
+super busca a partir de la clase superior, this de la propia clase
+super.toString buca al sup
+super. (método)
+Solo lo uso para asegurarme que no se busque el método local porque podría haber un problema sino usar this y va buscando en superiores ( acordarse el método de búsqueda de java)
+Metodos abstractos sin implementación en la superclase pero obligatoriamnete tengo que implemmentarlos en la clase
+Encapsulamiento
+//////////
+PREGUNTAR Ej 3 y 4 cuando dice N vos tenes que cargar N -1 ? porque empieza desde el 0? e imprimir tenes que mprimir pos + 1 ? bien
+EJ Juegadores y empleados de p4 -- Calcular sueldo básico
+preguntar e1p5
+       //PREGUNTAR SI ESTA BIEN TENER UNA INSTANCIA DL Y DESPUES TENER METODOS PRIVADOS PARA USARLA
+ES UN !
+
+/// ver set temperatura en p4e4 creo
+ver p5e1 otorgar todas. Resuelta 
+p5e2 null pointer?s
+NOTA:  A pesar de que declaras el array de habitaciones en el constructor, no estás inicializando cada habitación individualmente, solo estás creando el array. 
+{    this.habitaciones  = new Habitaciones[N];
+        setNum( N);// para saber la dim en aumentar habi o tiene que ser n-1??????????
+        for (int i = 0; i<N; i++) {
+            this.habitaciones[i] = new Habitaciones(); // no es lo mismo asignando null? 
+        }
+las habitaciones estan igual ! iniicializadas en libres ponele
+en cambio un estacionamiento puede no tener autos entonces esta e n null
+Cada habitación es un objeto entonces lo tengo que crear O NO?????'' 
+ Es importante primero verificar si la posición del array no es null antes de intentar invocar métodos sobre ella.}
+
+
+// p5E3 preguntar el aumentar a la siguiente fecha en actuar????? done
+p5E4 coros como guardar no enntendi . dimLog vec
+preguntar ejercicios de parciales viejos 
+cuando dice se inicialmente vacio o sin x agregados tengo que poner la aclaración de que esta en null por default?
+vector con dimensiones de la matriz
+no se imprime bien el de los conciertos
+
+----------
+Comentarios para parcial pf. 
+ adaptar indices OJO.
+ inicializar estructuras de datos.
+ dimLog de matriz son 2.
+ null no se inicializa si hay  dimLog .
+ lo mismo al recorrer no hay que preguntar porque depende de la dimLog
+ojo getter y setters demas
+
+hacer ej de hoteles y habitaciones practica 3 ej 4
