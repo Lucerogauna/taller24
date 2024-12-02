@@ -1,0 +1,81 @@
+programa e3p5
+procesos
+  proceso juntarF(ES f: numero)
+  comenzar
+    mientras ((HayFlorEnLaEsquina) & (f<10))
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso HacerEn10 (ES f: numero)
+  variables
+    ca, av: numero
+  comenzar
+    ca:= PosCa
+    av:= PosAv
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras (f> 0)
+      depositarFlor
+      f:= f - 1
+    Pos(av,ca)
+    LiberarEsquina(10,10)
+  fin
+  proceso procesoC
+  variables
+    flo, pasos, cAct, avAct: numero
+  comenzar
+    mientras (PosAv < 100)
+      pasos:= 0
+      flo:= 0
+      mientras ( (PosAv < 100)& (pasos<15)& (flo <10)){no falta analizar laultimaEsquina??}
+        juntarF(flo)
+        si ~(HayFlorEnLaEsquina)
+          mover
+          pasos:= pasos + 1
+      Informar('pasos',pasos)
+      Informar('flores', flo)
+      HacerEn10(flo)
+      EnviarMensaje(V, cose)
+    EnviarMensaje(F , cose)
+  fin
+  proceso juntarEn10Cosechador(ES f: numero)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+    Pos(1, 5)
+    LiberarEsquina(10,10)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot recolector
+  comenzar
+    derecha
+    procesoC
+  fin
+  robot cosechador
+  variables
+    f: numero
+    sigue: boolean
+  comenzar
+    RecibirMensaje(sigue, *)
+    mientras (sigue = V)
+      juntarEn10Cosechador(f)
+      RecibirMensaje(sigue , *)
+    Informar('floresRecolectores', f)
+  fin
+variables
+  reco1: recolector
+  reco2: recolector
+  cose: cosechador
+comenzar
+  AsignarArea(reco1, ciudad)
+  AsignarArea(reco2, ciudad)
+  AsignarArea(cose, ciudad)
+  Iniciar(reco1, 1,3)
+  Iniciar(reco2, 1,4)
+  Iniciar(cose, 1,5)
+fin

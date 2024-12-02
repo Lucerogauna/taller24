@@ -1,0 +1,122 @@
+
+programa ejemplo
+procesos
+  proceso juntarF (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin
+  proceso cuadrado(E t: numero;  ES flo: numero)
+  comenzar
+    repetir 4
+      repetir t
+        juntarF(flo)
+        mover
+      derecha
+  fin
+  proceso juntarFlores(E f: numero)
+  variables
+    av,ca: numero
+  comenzar
+    av:= PosAv
+    ca:= PosAv
+    BloquearEsquina(50,50)
+    Pos(50,50)
+    si (f>0)
+      repetir f
+        tomarFlor
+    Pos(av,ca)
+    LiberarEsquina(50,50) 
+  fin
+  proceso depositarEn50(E f: numero)
+  variables
+    av,ca: numero
+  comenzar
+    av:= PosAv
+    ca:= PosAv
+    si (f>0)
+      repetir f
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    id, tam,total, f: numero
+  comenzar
+    RecibirMensaje(id, coord)
+    RecibirMensaje(tam, coord)
+    total:=0
+    repetir 3
+      f:= 0
+      cuadrado(tam, f)
+      Informar(f)
+      total:= total + f
+      depositarEn50(f)
+      EnviarMensaje(id, coord)
+      EnviarMensaje(f, coord)
+      Pos(PosAv, PosCa+tam+1)
+    Informar('totalDeFlores',total)
+    EnviarMensaje(id, coord)
+    EnviarMensaje(total, coord)
+  fin
+  robot coordinador
+  variables
+    tam,floresReco,total,max,idMax, id,f1, f2, f3: numero
+  comenzar
+    EnviarMensaje(1,r1)
+    Random(tam, 1,6)
+    EnviarMensaje(tam, r1)
+    EnviarMensaje(2,r2)
+    Random(tam, 1,6)
+    EnviarMensaje(tam, r2)
+    EnviarMensaje(3,r3)
+    Random(tam, 1,6)
+    EnviarMensaje(tam, r3)
+    repetir 9
+      RecibirMensaje(id , *)
+      si (id = 1)
+        RecibirMensaje(floresReco , r1)
+        f1:= floresReco+ f1{o calculo interno y mando el total}
+      sino
+        si (id = 2)
+          RecibirMensaje(floresReco , r2)
+          f2:= floresReco+ f2
+        sino 
+          RecibirMensaje(floresReco , r3)
+          f3:= floresReco + f3
+      si (floresReco > 0)
+        juntarFlores(floresReco)
+    repetir 3
+      RecibirMensaje(id , *)
+      si (id = 1)
+        RecibirMensaje(total , r1)
+      sino
+        si (id = 2)
+          RecibirMensaje(total , r2)
+        sino 
+          RecibirMensaje(total , r3)
+      si (total > max)
+        max:= total
+        idMax:= id
+    Informar(idMax)
+  fin
+variables
+  r1,r2, r3: robot1
+  coord: coordinador
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(coord, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 8,1)
+  Iniciar(r3, 15,1)
+  Iniciar(coord, 51,1)
+fin

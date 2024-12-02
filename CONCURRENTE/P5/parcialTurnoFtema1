@@ -1,0 +1,106 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso depositarEn20(E f: numero)
+  variables
+    av, ca: numero
+  comenzar
+    si (f>0)
+      av:= PosAv
+      ca:=PosCa
+      repetir f
+        BloquearEsquina(20,20)
+        Pos(20,20)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(20,20)
+  fin
+  proceso juntarFlo(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin
+  proceso recoL(E cant: numero; ES flo: numero)
+  comenzar
+    repetir 2
+      repetir (cant)
+        juntarFlo(flo)
+        mover
+      juntarFlo(flo)
+      derecha
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    id,f: numero
+  comenzar
+    RecibirMensaje(id, fiscal )
+    recoL(10, f)
+    depositarEn20(f)
+    si (id  = 1)
+      EnviarMensaje(f, r11)
+    sino 
+      EnviarMensaje(f, r22)
+  fin
+  robot robot2
+  variables
+    id, ftotal,f: numero
+  comenzar
+    RecibirMensaje(id, fiscal)
+    repetir 2
+      derecha
+    si (id = 11)
+      RecibirMensaje(f, r1)
+    sino
+      RecibirMensaje(f, r2)
+    ftotal:= f
+    f:= 0
+    recoL(9, f)
+    ftotal:= ftotal + f
+    depositarEn20(f)
+    EnviarMensaje(id, fiscal)
+    EnviarMensaje(ftotal, fiscal)
+  fin
+  robot fi
+  variables
+    id, f, max, idmax: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(11, r11)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(22, r22)
+    max:= 0
+    repetir 2
+      RecibirMensaje(id, *)
+      si (id = 11)
+        RecibirMensaje(f, r11)
+      sino
+        RecibirMensaje(f, r22)
+      si (f> max)
+        max:= f
+        idmax:= max
+    Informar(idmax) 
+  fin
+variables
+  r1,r2: robot1
+  r11,r22: robot2
+  fiscal: fi
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r11, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r22, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(fiscal, 100,100)
+  Iniciar(r1, 1,1)
+  Iniciar(r11, 11,10)
+  Iniciar(r2, 13,1)
+  Iniciar(r22, 23,10)
+fin

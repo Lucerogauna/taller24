@@ -1,0 +1,97 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un cÃ³digo de ejemplo que implementa un
+proceso que recibe un nÃºmero de avenida como parÃ¡metro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot cliente
+  variables
+    flo, id: numero
+    autorizacion: boolean
+  comenzar
+    RecibirMensaje(id, server)
+    mientras (PosCa <100)
+      Random (flo,1,4)
+      EnviarMensaje(id, server)
+      EnviarMensaje(flo, server)
+      si (flo <> 0)
+        EnviarMensaje(PosAv, server)
+        EnviarMensaje(PosCa+1, server)
+        RecibirMensaje(autorizacion, server)
+        Pos(PosAv, PosCa+1)
+        repetir flo
+          tomarFlor
+        Pos(PosAv, PosCa-1)
+        repetir flo
+          Pos(PosAv, PosCa+1)
+          depositarFlor
+    EnviarMensaje(0, server)
+  fin
+  robot servidor
+  variables
+    id, flo,av,ca, ok, termino: numero
+  comenzar
+    termino:= 0
+    EnviarMensaje(1, c1)
+    EnviarMensaje(2, c2)
+    EnviarMensaje(3, c3)
+    mientras (termino <> 3)
+      RecibirMensaje(id, *) 
+      si (id = 1)
+        RecibirMensaje(flo, c1)
+        si (flo <> 0)
+          RecibirMensaje(av, c1 )
+          RecibirMensaje(ca,c1 )
+          Pos(av,ca)
+          repetir flo
+            depositarFlo
+          Pos(100,100)
+          EnviarMensaje(V, c1)
+        sino 
+          RecibirMensaje(ok, c1)
+          termino:= termino +1
+      si (id = 2)
+        RecibirMensaje(flo, c2)
+        si (flo <> 0)
+          RecibirMensaje(av, c2 )
+          RecibirMensaje(ca,c2)
+          Pos(av,ca)
+          repetir flo
+            depositarFlo
+          Pos(100,100)
+          EnviarMensaje(V, c2)
+        sino 
+          RecibirMensaje(ok, c2)
+          termino:= termino +1
+      sino
+        RecibirMensaje(flo, c3)
+        si (flo <> 0)
+          RecibirMensaje(av, c3 )
+          RecibirMensaje(ca,c3)
+          Pos(av,ca)
+          repetir flo
+            depositarFlo
+          Pos(100,100)
+          EnviarMensaje(V, c3)
+        sino 
+          RecibirMensaje(ok, c3)
+          termino:= termino +1
+  fin
+variables
+  c1: cliente
+  c2: cliente
+  c3: cliente
+  server: servidor
+comenzar
+  AsignarArea(c1, ciudad)
+  AsignarArea(c2, ciudad)
+  AsignarArea(c3, ciudad)
+  AsignarArea(server, ciudad)
+  Iniciar(server, 100,100)
+  Iniciar(c1, 1,1)
+  Iniciar(c2, 2,1)
+  Iniciar(c3, 3,1)
+fin

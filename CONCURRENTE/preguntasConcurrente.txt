@@ -1,0 +1,64 @@
+Cuando junto las flores
+y despuestengo qu depositar en x esquina
+tengo que usar una variable que cuente la cant de flores o puedo usar mientras HayFlorEnLaBolsa depositar?
+Area PC por ahora
+comentarios -> {}
+Informar 'comillasSimple_TodoJunto'
+ver ej2p1
+av1: AreaP (10,10,10, 29)
+av2: AreaP(10,30, )
+------
+Recepción sincronica RecibirMensaje (variable(siempre), variableRobot)
+EnviarMensaje asincrónica EnviarMEnsaje(variable, variableRobot)
+Recepción de mensaje puede ser también (variable, *) significa de cualquier robot
+Robot jefe se encarga de los ID!!!
+RecibirMensaje(quiensoy, jefe)
+EnviarMensaje(1, robot1)
+
+----
+RecibirMensaje(numRobot, *)
+si (numRobot = 1)
+	RecibirMensaje (flores, robot1)
+sino
+	RecibirMensaje (flores, robot2)
+si (f>= max)
+	max := f
+	rmax := quien
+Informar(rmax)
+---------------
+BloquearEsquina (PosAv+1, posCa) se puede
+…
+LiberarEsquina(av,ca)
+
+es importante bloquear y desbloquear lo antes posible para que otro robot pueda desbloquear después
+
+Bloquear antes de que el robot se posicione en la esquina
+
+Preguntar desde p2e4 que no entiendo
+como avisar a los robots que no hay mas
+-------------------------
+ver p2e4
+---------------
+NottasClase:
+Pasaje de mensajes
+Ojo con pasar ID cuando no necesita
+cuando termino manda el ID, no el ID y un boolean
+No suponer que el id y dato lleguan juntos
+No forzar secuencialidad:
+Rm(ok, r1)
+Rm(ok, r2)
+Retrasar todo lo que se pueda:
+bloquear esquinas y recibir msj
+Adelantar liberar y enviar
+Hacer calculos fuera de las esquinas conflict.
+area priorizar al final
+priorizar lógica
+---------
+
+preguntar
+p3e6 (no lo hice) 
+ p4e1 (no lo hice)
+p4e2 (si no cargo papeles, se cae)
+-----
+5.11. ver p5e2 modificado
+acordarse de maximizar la concurrencia! repetir flores bloq esquina hacer salgo liberoetc

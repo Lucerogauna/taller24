@@ -1,0 +1,92 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un cÃ³digo de ejemplo que implementa un
+proceso que recibe un nÃºmero de avenida como parÃ¡metro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarEn11(E id: numero; ES av: numero; ES ca: numero; ES ok: boolean)
+  comenzar
+    BloquearEsquina(11,11)
+    Pos(11,11)
+    si ((HayPapelEnLaEsquina) & (PosCa<99))
+      tomarPapel
+      Pos(av,ca)
+      LiberarEsquina(11,11)
+      depositarPapel
+      ok:= V
+      ca:= ca+1
+      Pos(av, ca)
+    sino
+      Pos(av, ca)
+      LiberarEsquina(11,11)
+      ok:= F
+      EnviarMensaje(id, coor)
+      EnviarMensaje(ca, coor) {cant de pasos}
+  fin
+  proceso actualizarMax(E pasos: numero; E id: numero; ES rmax: numero;ES pasosmax: numero)
+  comenzar
+    si (pasos > pasosmax)
+      pasosmax:= pasos
+      rmax:= id
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables 
+    ca, av, id: numero
+    cumple: boolean
+  comenzar
+    RecibirMensaje(id, coor)
+    ca:= PosCa
+    av:= PosAv
+    cumple:= V
+    mientras (cumple)
+      juntarEn11(id,av,ca, cumple)
+  fin
+  robot robotC
+  variables
+    id, pasos, rmax, pasosmax : numero
+  comenzar
+    pasosmax:= 0
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    repetir 4
+      RecibirMensaje(id , *)
+      si (id = 1)
+        RecibirMensaje(pasos, r1)
+        actualizarMax(pasos, id, rmax, pasosmax)
+      sino
+        si (id = 2)
+          RecibirMensaje(pasos, r2)
+          actualizarMax(pasos, id, rmax, pasosmax)
+        sino
+          si (id = 3)
+            RecibirMensaje(pasos, r3)
+            actualizarMax(pasos, id, rmax, pasosmax)
+          sino
+            RecibirMensaje(pasos, r4)
+            actualizarMax(pasos, id, rmax, pasosmax)
+    Informar('el_robot_que_llego_mas_lejos_fue_ el_N', rmax)
+  fin
+variables
+  r1: robot1
+  r4: robot1
+  r3: robot1
+  r2: robot1
+  coor: robotC
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r4, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(coor, ciudad)
+  Iniciar(r1, 4,1)
+  Iniciar(r2, 6,1)
+  Iniciar(r3, 8,1)
+  Iniciar(r4, 10,1)
+  Iniciar(coor, 1,1)
+fin

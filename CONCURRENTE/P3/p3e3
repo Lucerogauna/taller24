@@ -1,0 +1,118 @@
+{Tengo que hcer direntes procesos para c u robot
+Area compartida lo hago manual??}
+
+programa ej2p3
+procesos
+  proceso juntarF(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin
+areas
+  ciudad: AreaPC (2,2,10,10)
+  area: AreaP (1,1,5,1) {tendria que ser uno para cu}
+robots
+  robot tipo1
+  variables
+    av: numero
+    ca: numero
+    avO: numero
+    caO: numero
+    ok: boolean
+    f, id: numero
+  comenzar
+    RecibirMensaje(id, jefe)
+    RecibirMensaje(ca, jefe)
+    RecibirMensaje(av, jefe)
+    avO:= PosAv
+    caO:= PosCa
+    ok:= V
+    mientras (ok)
+      BloquearEsquina(av, ca)
+      Pos(av, ca)
+      si HayFlorEnLaEsquina
+        tomarFlor
+        f:= f+1
+      sino
+        ok:= F
+      Pos(avO, caO)
+      LiberarEsquina(av, ca)
+    EnviarMensaje(id, jefe){manda que termino}
+    EnviarMensaje(f, jefe)
+    
+  fin
+  robot tipo2
+  variables
+    Nrobot: numero
+    nroMax: numero
+    flo, max: numero
+    ca: numero
+    av: numero
+  comenzar
+    max:= 0
+    Random(ca, 2, 10)
+    Random(av, 2, 10)
+    ca:= 5 {de prueba en 5,5}
+    av:= 5
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    EnviarMensaje(ca, r1)
+    EnviarMensaje(av, r1)
+    EnviarMensaje(ca, r2)
+    EnviarMensaje(av, r2)
+    EnviarMensaje(ca, r3)
+    EnviarMensaje(av, r3)
+    EnviarMensaje(ca, r4)
+    EnviarMensaje(av, r4)
+    repetir 4
+      RecibirMensaje(Nrobot, *)
+      si (Nrobot = 1)
+        RecibirMensaje(flo, r1)
+        si (flo > max)
+          max:= flo
+          nroMax:= Nrobot
+      sino 
+        si (Nrobot = 2)
+          RecibirMensaje(flo, r2)
+          si (flo > max)
+            max:= flo
+            nroMax:= Nrobot
+        sino
+          si (Nrobot = 3)
+            RecibirMensaje(flo, r3)
+            si (flo > max)
+              max:= flo
+              nroMax:= Nrobot
+          sino
+            RecibirMensaje(flo, r4)
+            si (flo > max)
+              max:= flo
+              nroMax:= Nrobot
+    Informar('elRobotQueJuntoMasEs',nroMax)        
+  fin
+variables
+  r1: tipo1
+  r2: tipo1
+  r3: tipo1
+  r4: tipo1
+  jefe: tipo2
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r4, ciudad)
+  AsignarArea(jefe, ciudad)
+  AsignarArea(r1, area)
+  AsignarArea(r2, area)
+  AsignarArea(r3, area)
+  AsignarArea(r4, area)
+  AsignarArea(jefe, area)
+  Iniciar(jefe,  1,1)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 3,1)
+  Iniciar(r3, 4,1)
+  Iniciar(r4, 5,1)
+fin

@@ -1,0 +1,80 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlor(E numAv: numero)
+  comenzar
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    ActCa, ActAv,av,ca,id: numero
+    seguir:boolean
+  comenzar
+    ActCa: PosCa
+    ActAv: PosAv
+    seguir := V
+    RecibirMensaje(id,jefe)
+    RecibirMensaje(av,jefe)
+    RecibirMensaje(ca,jefe)
+    mientras (seguir)
+      BloquearEsquina(av, ca)
+      Pos(av,ca)
+      si (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:=flores+1
+      sino
+        seguir:= F
+      Pos(ActAv,ActCa)
+      LiberarEsquina(av,ca)
+    EnviarMensaje(id,jefe)
+    EnviarMensaje(flores,jefe)
+  fin
+  robot coordinador
+  variables
+    av,idmax,flomax, ca ,flo:numero
+  comenzar
+    flomax:= 0
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    Random(ca, 2,10)
+    Random(av, 2, 10)
+    EnviarMensaje(av, r1)
+    EnviarMensaje(ca, r1)
+    EnviarMensaje(av, r2)
+    EnviarMensaje(ca, r2)
+    EnviarMensaje(av, r3)
+    EnviarMensaje(ca, r3)
+    EnviarMensaje(av, r4)
+    EnviarMensaje(ca, r4)
+    repetir 4
+      RecibirMensaje(id, *)
+      si (id= 1)
+        RecibirMensaje(flo, r1)
+      sino
+        si (id= 2)
+          RecibirMensaje(flo, r2)
+        sino
+          si (id= 3)
+            RecibirMensaje(flo, r3)
+          sino
+            RecibirMensaje(flo, r4)
+      si (flo > flomax)
+        flomax:= flo
+        idmax:= id
+    Informar(idmax)
+  fin
+variables
+  r1,r2,r3,r4: robot1
+  jefe: coordinador
+comenzar
+  AsignarArea(R_info, ciudad)
+  Iniciar(R_info, 1,1)
+fin

@@ -1,0 +1,116 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlo(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin
+  proceso juntarPa (ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:= p+1
+  fin
+  proceso recorrerAvenida(E numAv: numero)
+  comenzar
+    Pos(numAv, 1)
+    repetir 99
+      mover
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot florero
+  variables
+    id, f: numero
+  comenzar
+    RecibirMensaje(id, fis)
+    derecha
+    repetir 4
+      juntarFlo(f)
+      mover
+    Informar(PosAv,PosCa)
+    BloquearEsquina(PosAv+1, PosCa)
+    mover
+    juntarFlo(f)
+    mover
+    LiberarEsquina(PosAv-1,PosCa)
+    repetir 4
+      juntarFlo(f)
+      mover
+    EnviarMensaje(id, fis)
+    EnviarMensaje(f, fis)
+  fin
+  robot papelero
+  variables
+    p, id: numero
+  comenzar
+    RecibirMensaje(id, fis)
+    repetir 7
+      juntarPa(p)
+      mover
+    Informar(PosAv,PosCa)
+    BloquearEsquina(PosAv,PosCa+1)
+    mover
+    juntarPa(p)
+    mover
+    LiberarEsquina(PosAv,PosCa-1)
+    repetir 8
+      juntarPa(p)
+      mover
+    EnviarMensaje(id, fis)
+    EnviarMensaje(p, fis)
+  fin
+  robot fiscal
+  variables
+    totalA, totalB, p, f, id: numero
+  comenzar
+    EnviarMensaje(1, floA)
+    EnviarMensaje(11, paA)
+    EnviarMensaje(2, floV)
+    EnviarMensaje(22, paV)
+    totalA:= 0
+    totalB:= 0
+    repetir 4
+      RecibirMensaje(id, *)
+      si (id = 1)
+        RecibirMensaje(f, floA)
+        totalA:= totalA + f
+      sino 
+        si (id = 11)
+          RecibirMensaje(p, paA)
+          totalA:= totalA + p
+        sino
+          si (id = 2)
+            RecibirMensaje(f, floV)
+            totalB:= totalB + f
+          sino
+            RecibirMensaje(p, paV)
+            totalB:= totalB+ p
+    si (totalA > totalB)
+      Informar('ganoElEquipoA', 1)
+    sino
+      Informar('ganoElEquipoB', 2)
+  fin
+variables
+  floA, floV: florero
+  paA,paV: papelero
+  fis: fiscal
+comenzar
+  AsignarArea(fis, ciudad)
+  AsignarArea(floA, ciudad)
+  AsignarArea(floV, ciudad)
+  AsignarArea(paA, ciudad)
+  AsignarArea(paV, ciudad)
+  Iniciar(fis, 1,1)
+  Iniciar(floA, 2,12)
+  Iniciar(floV, 16,12)
+  Iniciar(paA, 7,4)
+  Iniciar(paV, 21,4)
+fin

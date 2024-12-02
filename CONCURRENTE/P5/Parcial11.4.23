@@ -1,0 +1,105 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlo(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin
+
+  proceso hacerEn25(E flo: numero)
+  variables
+    av, ca: numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    si (flo > 0)
+      repetir flo
+        BloquearEsquina(25,25)
+        Pos(25,25)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(25,25)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    id, alt,tot, ancho, f: numero
+  comenzar
+    RecibirMensaje(id, r4)
+    RecibirMensaje(alt, r4)
+    RecibirMensaje(ancho, r4)
+    repetir 2
+      f:= 0
+      repetir alt
+        juntarFlo(f)
+        mover
+      juntarFlo(f)
+      tot:= tot + f
+      derecha
+      hacerEn25(f)
+      f:= 0
+      repetir ancho
+        juntarFlo(f)
+        mover
+      juntarFlo(f)
+      tot:= tot + f
+      derecha
+      hacerEn25(f)
+    EnviarMensaje(id, r4)
+    EnviarMensaje(tot, r4)
+  fin
+  robot coordinador
+  variables
+    f, id, alto,ancho,idmax, tot, max: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    Random(alto, 1,11)
+    Random(ancho, 1,5)
+    EnviarMensaje(alto, r1)
+    EnviarMensaje(ancho, r1)
+    EnviarMensaje(2, r2)
+    Random(alto, 1,11)
+    Random(ancho, 1,5)
+    EnviarMensaje(alto, r2)
+    EnviarMensaje(ancho, r2)
+    EnviarMensaje(3, r3)
+    Random(alto, 1,11)
+    Random(ancho, 1,5)
+    EnviarMensaje(alto, r3)
+    EnviarMensaje(ancho, r3)
+    repetir 3
+      RecibirMensaje(id, *)
+      si (id = 1)
+        RecibirMensaje(tot, r1)
+      sino
+        si (id = 2)
+          RecibirMensaje(tot, r2)
+        sino
+          RecibirMensaje(tot, r3)
+      si (tot > max)
+        max:=  tot
+        idmax:= id
+    Informar(max)
+    Informar(idmax)
+  fin
+variables
+  r1, r2, r3: robot1
+  r4: coordinador
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r4, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 7,1)
+  Iniciar(r3, 13,1)
+  Iniciar(r4, 24,24)
+fin

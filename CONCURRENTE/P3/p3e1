@@ -1,0 +1,96 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un cÃ³digo de ejemplo que implementa un
+proceso que recibe un nÃºmero de avenida como parÃ¡metro,
+se posiciona en esa avenida y la recorre.}
+
+programa p3e1
+procesos
+  proceso juntarFlo(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:= flores+1
+  fin
+  proceso juntarPa(ES pa: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      pa:= pa+1
+  fin
+areas
+  areaFloreros: AreaPC (1,1,5,10)
+  areaPapeleros: AreaPC (6,1,10,9)
+  flo: AreaPC (6,10, 7,10)
+  pa: AreaPC(8,10, 9, 10)
+  Esquina10: AreaC(10,10, 10, 10)
+robots
+  robot tipo1
+  variables 
+    f: numero
+    av: numero
+    ca: numero
+    avO: numero
+    caO: numero
+  comenzar
+    caO:= PosCa
+    avO:= PosAv
+    repetir 5
+      Random (av, 1, 5)
+      Random(ca, 1, 10)
+      Pos(av, ca)
+      juntarFlo(f)
+      Pos(avO, caO)
+    BloquearEsquina(10,10)
+    Pos (10,10)
+    repetir f
+      depositarFlor
+    Pos(avO, caO)
+    LiberarEsquina(10,10)
+  fin
+  robot tipo2
+  variables 
+    p: numero
+    av: numero
+    ca: numero
+    avO: numero
+    caO: numero
+  comenzar
+    caO:= PosCa
+    avO:= PosAv
+    repetir 3
+      Random (av, 6, 10)
+      Random(ca, 1,9)
+      Pos(av, ca)
+      juntarPa(p)
+      Pos(avO, caO)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    si HayPapelEnLaBolsa{agregue esto porque me aparecio que no habia papeles en la bolsa}
+      repetir p
+        depositarPapel
+    Pos(avO, caO)
+    LiberarEsquina(10,10)
+  fin
+variables
+  florero: tipo1
+  florero2: tipo1
+  papelero: tipo2
+  papelero2: tipo2
+comenzar
+  AsignarArea(florero, areaFloreros)
+  AsignarArea(florero2, areaFloreros)
+  AsignarArea(florero, flo)
+  AsignarArea(florero2, flo)
+  AsignarArea(papelero, areaPapeleros)
+  AsignarArea(papelero2, areaPapeleros)
+  AsignarArea(papelero, pa)
+  AsignarArea(papelero2, pa)
+  AsignarArea(papelero, Esquina10)
+  AsignarArea(papelero2, Esquina10)
+  AsignarArea(florero, Esquina10)
+  AsignarArea(florero2, Esquina10)
+  Iniciar(florero, 6,10)
+  Iniciar(florero2, 7, 10)
+  Iniciar(papelero, 8,10)
+  Iniciar(papelero2, 9, 10)
+fin

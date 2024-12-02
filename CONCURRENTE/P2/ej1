@@ -1,0 +1,45 @@
+programa ejemplo
+procesos
+  proceso juntarFlo (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f := f + 1
+  fin
+  proceso recorrerAvenida(ES f: numero)
+  comenzar
+    repetir 9
+      juntarFlo(f)
+      mover
+    juntarFlo(f)
+  fin
+areas
+  area1: AreaP (1,1,1,10)
+  area2: AreaP (2,11,2,20)
+robots
+  robot tipo1
+  variables
+    flo: numero
+    floContraria: numero
+  comenzar
+    recorrerAvenida(flo)
+    si (PosAv = 1)
+      EnviarMensaje(flo, r2)
+    sino
+      EnviarMensaje(flo, r1)
+    si (PosAv= 1)
+      RecibirMensaje(floContraria, r2)
+    sino
+      RecibirMensaje(floContraria, r1)
+    si (flo>floContraria)
+      Informar((flo-floContraria))
+  fin
+variables
+  r1: tipo1
+  r2: tipo1
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r2, area2)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+fin

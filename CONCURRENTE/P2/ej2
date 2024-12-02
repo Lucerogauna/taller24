@@ -1,0 +1,67 @@
+programa ejemplo
+procesos
+  proceso contarFyP (ES f: numero; ES p: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      f := f + 1
+    mientras HayPapelEnLaEsquina
+      p:= p + 1
+  fin
+  proceso escalones (ES cant : numero) 
+  variables
+    valorAleatorio: numero
+    flo: numero
+    pa: numero
+  comenzar
+    Random(valorAleatorio, 1, 5)
+    repetir 4
+      flo:=0
+      pa:=0
+      repetir (valorAleatorio)
+        contarFyP(flo, pa)
+        mover
+      derecha
+      mover
+      contarFyP(flo, pa)
+      repetir 3
+        derecha
+      si (flo> pa)
+        cant:= cant +1
+  fin
+areas
+  area1: AreaPC (2,1,20,20)
+  areaJ: AreaP (1,1,1,1)
+robots
+  robot tipo1
+  variables
+    cant: numero
+    floContraria: numero
+  comenzar
+    escalones(cant)
+    EnviarMensaje(cant, jefe)
+  fin
+  robot tipo2
+  variables
+    flo:numero
+    total: numero
+  comenzar
+    repetir 3
+      RecibirMensaje(flo, *)
+      total:= total + flo
+    Informar(total)
+  fin
+variables
+  r1: tipo1
+  r2: tipo1
+  r3: tipo1
+  jefe: tipo2
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r2, area1)
+  AsignarArea(r3, area1)
+  AsignarArea(jefe, areaJ)
+  Iniciar(jefe, 1,1)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 7,1)
+  Iniciar(r3, 12,1)
+fin

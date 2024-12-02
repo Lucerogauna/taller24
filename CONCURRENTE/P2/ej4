@@ -1,0 +1,137 @@
+programa ejemplo
+procesos
+  proceso contarFyP (ES f: numero; ES p: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      f := f + 1
+    mientras HayPapelEnLaEsquina
+      p:= p + 1
+  fin
+areas
+  area: AreaPC (25,25,75,75)
+  areaFiscal: AreaP (1,1,1,1)
+  areaR1: AreaP (25,1,25,1)
+  areaR2: AreaP (30,1,30,1)
+  areaR3: AreaP (35,1,35,1)
+  areaR4: AreaP (40,1,40,1)
+robots
+  robot tipo1
+  variables
+    ok:boolean
+    flo: numero
+    pa: numero
+    av: numero
+    ca: numero
+    avIni: numero
+    caIni: numero
+    total: numero
+    quienSoy: numero
+    win : boolean
+  comenzar
+    RecibirMensaje(quienSoy, fiscal){al pedo me parece}
+    RecibirMensaje(ok,fiscal)
+    mientras (ok = V)
+      caIni:= PosCa
+      avIni:= PosAv
+      Random(av, 25, 75)
+      Random(ca, 25, 75)
+      Pos(av, ca)
+      contarFyP(flo, pa)
+      total:= flo + pa
+      Pos(avIni, caIni)
+      EnviarMensaje(V, fiscal){avisa al jefe que ya termino}
+      RecibirMensaje(ok, fiscal)
+    EnviarMensaje(quienSoy, fiscal)
+    EnviarMensaje(total, fiscal)
+    RecibirMensaje(win, fiscal)
+    si (win = V)
+      Pos(50,50)
+  fin
+  robot tipoF
+  variables
+    quien: numero
+    x: numero
+    ok: boolean
+    max: numero
+    total: numero
+    rmax: numero
+  comenzar
+    max:= 0
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    EnviarMensaje(4, R4)
+    repetir 10
+      Random (x, 1,4)
+      si (x = 1)
+        EnviarMensaje(V, R1 )
+        RecibirMensaje(ok, R1)
+      si (x = 2)
+        EnviarMensaje(V, R2 )
+        RecibirMensaje(ok, R2)
+      si (x= 3)
+        EnviarMensaje(V, R3)
+        RecibirMensaje(ok, R3)
+      sino 
+        EnviarMensaje(V, R4)
+        RecibirMensaje(ok, R4)
+    EnviarMensaje(F, R4)
+    EnviarMensaje(F, R3)
+    EnviarMensaje(F, R2)
+    EnviarMensaje(F, R1)
+    repetir 4
+      RecibirMensaje(quien, *)
+      si (quien = 1)
+        RecibirMensaje(total, R1)
+      si (quien = 2)
+        RecibirMensaje(total, R2)
+      si (quien = 3)
+        RecibirMensaje(total, R3)
+      sino
+        RecibirMensaje(total, R4)
+      si (total> max)
+        max:= total
+        rmax:= quien
+    si (rmax= 1)
+      EnviarMensaje(V, R1)
+      EnviarMensaje(F, R2)
+      EnviarMensaje(F, R3)
+      EnviarMensaje(F, R4)      
+    si (rmax= 2)
+      EnviarMensaje(F, R1)
+      EnviarMensaje(V, R2)
+      EnviarMensaje(F, R3)
+      EnviarMensaje(F, R4) 
+    si (rmax= 3)
+      EnviarMensaje(V, R3)
+      EnviarMensaje(F, R2)
+      EnviarMensaje(F, R4)
+      EnviarMensaje(F, R1) 
+    sino
+      EnviarMensaje(V, R4)
+      EnviarMensaje(F, R2)
+      EnviarMensaje(F, R3)
+      EnviarMensaje(F, R1) 
+  fin
+variables
+  R1: tipo1
+  R2: tipo1
+  R3: tipo1
+  R4: tipo1
+  fiscal: tipoF
+comenzar
+  AsignarArea(R1, areaR1)
+  AsignarArea(R2, areaR2)
+  AsignarArea(R3, areaR3)
+  AsignarArea(R4, areaR4)
+  AsignarArea(R1, area)
+  AsignarArea(R2, area)
+  AsignarArea(R3, area)
+  AsignarArea(R4, area)
+  AsignarArea(fiscal, areaFiscal)
+  Iniciar(fiscal, 1,1)
+  Iniciar(R1, 25,1)
+  Iniciar(R2, 30,1)
+  Iniciar(R3, 35,1)
+  Iniciar(R4, 40,1)
+fin

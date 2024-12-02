@@ -1,0 +1,59 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa p3e6
+procesos
+  proceso juntarFlo (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso juntarPa (ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso condicion (E id: numero; ES pa: numero, ES flo: numero)
+  comenzar
+    si (id = 1)
+      juntarFlo(flo)
+    si (id = 2)
+      juntarFlo(flo)
+      juntarPa(pa)
+    sino
+      juntarPa(pa)
+  fin
+  proceso cuadrante(E tamanio: numero)
+  variables 
+    flo, pa: numero
+  comenzar
+    flo:= 0
+    pa:= 0
+    RecibirMensaje(id, fiscal)
+    repetir 4
+      repetir tamanio
+        condicion(id, flo, pa)
+        mover
+        derecha
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    recorrerAvenida(1)
+  fin
+variables
+  R_info: robot1
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  Iniciar(r1, 2,2)
+  Iniciar(r2, 5,5)
+  Iniciar(r3, 9,9)
+fin

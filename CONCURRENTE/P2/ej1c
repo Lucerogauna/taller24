@@ -1,0 +1,71 @@
+programa ejemplo
+procesos
+  proceso juntarFlo (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f := f + 1
+  fin
+  proceso recorrerAvenida(ES f: numero)
+  comenzar
+    repetir 9
+      juntarFlo(f)
+      mover
+    juntarFlo(f)
+  fin
+areas
+  area1: AreaP (1,1,1,10)
+  area2: AreaP (2,11,2,20)
+  area3: AreaP (3,21,3,30)
+  area4: AreaP (4,31,4,40)
+  area5: AreaP (5,41,5,50)
+  area6: AreaP (6,51,6,60)
+  areaF: AreaP (2,1,2,1)
+robots
+  robot tipo1
+  variables
+    flo: numero
+    floContraria: numero
+  comenzar
+    recorrerAvenida(flo)
+    si (PosAv = 1)
+      EnviarMensaje(flo, r3)
+    sino
+      EnviarMensaje(flo, r3)
+  fin
+  robot tipo2
+  variables
+    flo: numero
+    cantFloresGanador: numero
+  comenzar
+    cantFloresGanador:=0 {hace falta inicializar?}
+    repetir 6
+      RecibirMensaje(flo, *)
+      si (flo > cantFloresGanador)
+        cantFloresGanador:= flo
+    Informar(cantFloresGanador)
+  fin
+variables
+  r1: tipo1
+  r2: tipo1
+  r33: tipo1
+  r4: tipo1
+  r5: tipo1
+  r6: tipo1
+  r3: tipo2
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r2, area2)
+  AsignarArea(r3, areaF)
+  AsignarArea(r33, area3)
+  AsignarArea(r4, area4)
+  AsignarArea(r5, area5)
+  AsignarArea(r6, area6)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+  Iniciar(r3, 2,1)
+  Iniciar(r33,3, 21)
+  Iniciar(r4, 4,31)
+  Iniciar(r5, 5,41)
+  Iniciar(r6, 6,51)
+fin

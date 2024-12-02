@@ -1,0 +1,102 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso HacerEnEsquina(E av: numero; E ca: numero; ES flo: numero)
+  variables
+    caO, avO: numero
+  comenzar
+    caO:= PosCa
+    avO:=PosAv
+    BloquearEsquina(av,ca)
+    Pos(av, ca)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flo:= flo + 1
+    Pos(avO,  caO)
+    LiberarEsquina(av,ca)
+  fin
+  proceso HacerEnEsquina10(E flo: numero)
+  variables
+    avO, caO: numero
+  comenzar
+    caO:= PosCa
+    avO:=PosAv
+    BloquearEsquina(10,10)
+    Pos(10, 10)
+    si (HayFlorEnLaBolsa)
+      repetir flo 
+        depositarFlor
+    Pos(avO,  caO)
+    LiberarEsquina(10,10)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot florero
+  variables
+    av, ca, flo: numero
+    sigue: boolean
+  comenzar
+    RecibirMensaje(sigue, jefe)
+    mientras(sigue = V)
+      Informar(1) 
+      RecibirMensaje(av, jefe)
+      RecibirMensaje(ca, jefe)
+      HacerEnEsquina(av, ca, flo)
+      EnviarMensaje(V, jefe)
+      RecibirMensaje(sigue, jefe)
+    HacerEnEsquina10(flo)
+    Informar('cantFlo',flo)
+    EnviarMensaje(flo, jefe)
+  fin
+  robot jef
+  variables
+    av, ca,tot,rr, flo: numero
+    sigue: boolean
+  comenzar
+    repetir 8
+      Random(ca, 40,60)
+      Random(av, 40, 60)
+      Random(rr, 1, 3)
+      si (rr= 1)
+        EnviarMensaje(V, r1)
+        EnviarMensaje(av, r1)
+        EnviarMensaje(ca, r1)
+        RecibirMensaje(sigue, r1)
+      sino
+        si (rr= 2)
+          EnviarMensaje(V, r2)
+          EnviarMensaje(av, r2)
+          EnviarMensaje(ca, r2)
+          RecibirMensaje(sigue, r2)
+        sino
+          EnviarMensaje(V, r3)
+          EnviarMensaje(av, r3)
+          EnviarMensaje(ca, r3)
+          RecibirMensaje(sigue, r3)
+    repetir 3
+      EnviarMensaje(F, r1)
+      EnviarMensaje(F, r2)
+      EnviarMensaje(F, r3)
+    repetir 3
+      RecibirMensaje(flo, *)
+      tot:= tot + flo
+    Informar(tot)
+  fin
+variables
+  r1,r2,r3: florero
+  jefe: jef
+comenzar
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r1, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,1)
+  Iniciar(r3, 3,1)
+  Iniciar(jefe, 4,1)
+fin

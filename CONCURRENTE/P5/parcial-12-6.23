@@ -1,0 +1,116 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarF(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+ 1
+  fin
+  proceso cuadradoSup(ES f: numero)
+  comenzar
+    repetir 2
+      repetir 4
+        juntarF(f)
+        mover
+      derecha
+      {Informar(PosAv, PosCa)}
+    repetir 3
+      juntarF(f)
+      mover
+    BloquearEsquina(PosAv,PosCa-1)
+    mover
+    juntarF(f)
+    derecha
+    mover
+    LiberarEsquina(PosAv+1, PosCa)
+    repetir 3
+      juntarF(f)
+      mover
+  fin
+  proceso cuadradoInf(ES f: numero)
+  comenzar
+    repetir 3
+      juntarF(f)
+      mover
+    {Informar(PosAv,PosCa)}
+    BloquearEsquina(PosAv,PosCa+1)
+    mover
+    juntarF(f)
+    derecha
+    mover
+    LiberarEsquina(PosAv-1, PosCa)
+    repetir 3
+      juntarF(f)
+      mover
+    derecha
+    repetir 2
+      repetir 4
+        juntarF(f)
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    f,id: numero
+    sigue: boolean
+  comenzar
+    RecibirMensaje(id, fis)
+    Pos(5,11)
+    repetir 3
+      cuadradoSup(f)
+      EnviarMensaje(id, fis)
+      RecibirMensaje(sigue, fis)
+      derecha
+      Pos(PosAv + 10, PosCa)
+  fin
+  robot robot2
+  variables
+    f, id: numero
+    sigue: boolean
+  comenzar
+    Pos(9,7)
+    RecibirMensaje(id, fis)
+    repetir 3
+      cuadradoInf(f)
+      EnviarMensaje(id, fis)
+      Pos(PosAv+10, PosCa)
+      RecibirMensaje(sigue, fis)
+  fin
+  robot fiscal
+  variables
+    ok, primero: boolean
+    id,idGanador: numero
+  comenzar
+    EnviarMensaje(1, j1)
+    EnviarMensaje(2, j2)
+    repetir 3
+      RecibirMensaje(id , *)
+      si (id = 1)
+        idGanador:= 1
+      sino
+        idGanador:= 2
+      RecibirMensaje(id, *)
+      Informar('ganoElRobot',idGanador)
+      EnviarMensaje(V, j1)
+      EnviarMensaje(V, j2)
+  fin
+variables
+  j1: robot1
+  j2: robot2
+  fis: fiscal
+comenzar
+  AsignarArea(j1, ciudad)
+  AsignarArea(j2, ciudad)
+  AsignarArea(fis, ciudad)
+  Iniciar(fis, 1,1)
+  Iniciar(j1, 2,2)
+  Iniciar(j2, 3,3)
+fin

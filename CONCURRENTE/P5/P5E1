@@ -1,0 +1,126 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso recorrerAvenidaJuntandoFlo(ES f: numero)
+  comenzar
+    repetir 96
+      juntarFlo(f)
+      mover
+    juntarFlo(f)
+    Informar(PosCa)
+    BloquearEsquina(PosAv, PosCa + 1)
+    mover
+    juntarFlo(f)
+    BloquearEsquina(PosAv, PosCa + 1)
+    mover
+    LiberarEsquina(PosAv, PosCa -1)
+    juntarFlo(f)
+    mover
+    LiberarEsquina(PosAv, PosCa-1)
+    juntarFlo(f)
+  fin
+  proceso recorrerAvenidaJuntandoPa(ES p: numero)
+  comenzar
+    juntarPa(p)
+    BloquearEsquina(PosAv+1, PosCa)
+    mover
+    juntarPa(p)
+    BloquearEsquina(PosAv+1, PosCa)
+    mover
+    LiberarEsquina(PosAv -1, PosCa)
+    juntarPa(p)
+    mover
+    LiberarEsquina(PosAv - 1, PosCa)
+    juntarPa(p)
+    repetir 96
+      juntarPa(p)
+      mover
+    Informar(PosAv)
+  fin
+  proceso juntarFlo(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f +1
+  fin
+  proceso juntarPa(ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:= p +1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    f,id, ftotal: numero
+  comenzar
+    RecibirMensaje(id, fiscal)
+    recorrerAvenidaJuntandoFlo(f)
+    EnviarMensaje(id, fiscal)
+    EnviarMensaje(f, fiscal)
+  fin
+  robot robot2
+  variables
+    p, id: numero
+  comenzar
+    RecibirMensaje(id, fiscal)
+    derecha
+    recorrerAvenidaJuntandoPa(p)
+    EnviarMensaje(id, fiscal)
+    EnviarMensaje(p, fiscal)
+  fin
+  robot fis
+  variables
+    pa,id,flo,PaEquipo2, floresEquipo1: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, a1)
+    EnviarMensaje(4, a2)
+    repetir 4
+      RecibirMensaje(id, *)
+      si (id = 1)
+        RecibirMensaje(flo, r1)
+        floresEquipo1:=floresEquipo1 + flo
+      sino
+        si (id = 2)
+          RecibirMensaje(flo, r2)
+          floresEquipo1:=floresEquipo1 + flo
+        sino
+          si (id = 3)
+            RecibirMensaje(pa, a1)
+            PaEquipo2:=PaEquipo2 + pa
+          sino
+            RecibirMensaje(pa, a2)
+            PaEquipo2:=PaEquipo2 + pa
+    Informar('papeles',PaEquipo2)
+    Informar('flores', floresEquipo1)
+    si (PaEquipo2 > floresEquipo1)
+      Informar('ganoElEquipo', 2)
+    sino
+      Informar('ganoElEquipo', 1)
+  fin
+variables
+  r1:  robot1
+  r2: robot1
+  a1: robot2
+  a2: robot2
+  fiscal: fis
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(a1, ciudad)
+  AsignarArea(a2, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(fiscal, 1,1)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 3,1)
+  Iniciar(a1, 1,98)
+  Iniciar(a2, 1,99)
+fin

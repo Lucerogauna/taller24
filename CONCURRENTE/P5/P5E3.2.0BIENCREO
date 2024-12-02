@@ -1,0 +1,89 @@
+
+programa ejemplo
+procesos
+  proceso juntarF(E f: numero)
+  variables
+    av,ca: numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    si (f > 0)
+      repetir f
+        BloquearEsquina(10,10)
+        Pos(10,10)
+        tomarFlor
+        Pos(av,ca)
+        LiberarEsquina(10,10)
+  fin
+  proceso vaciar (E flo: numero)
+  variables
+    av,ca: numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    si (flo > 0)
+      repetir flo
+        BloquearEsquina(10,10)
+        Pos(10,10)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(10,10)
+  fin
+  proceso juntarFlo(ES flo: numero)
+  comenzar
+    mientras ((HayFlorEnLaEsquina)&(flo < 10))
+      tomarFlor
+      flo:= flo + 1
+  fin
+  proceso recorrer
+  variables
+    pasos, flo: numero
+  comenzar
+    flo:= 0
+    mientras (PosAv < 100)
+      pasos:= 0
+      mientras ((PosAv <100)&(flo <10) & (pasos < 15))
+        juntarFlo(flo)
+        si ~(HayFlorEnLaEsquina)
+          mover
+          pasos:= pasos + 1
+      Informar('pasos', pasos)
+      Informar('flores', flo)
+      vaciar(flo)
+      si (PosAv < 100)
+        EnviarMensaje(flo, cose){avisa que deposit}
+      sino
+        EnviarMensaje(999, cose)  
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    derecha
+    recorrer
+  fin
+  robot cosechador
+  variables
+    terminaron, f: numero
+  comenzar
+    terminaron:= 0
+    mientras (terminaron < 2)  
+      RecibirMensaje(f, *)
+      si (f = 999)
+        terminaron:= terminaron +1
+      sino
+        Informar('hace',1)
+        juntarF(f) 
+  fin
+variables
+  r1,r2: robot1
+  cose: cosechador
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(cose, ciudad)
+  Iniciar(r1, 1,3)
+  Iniciar(r2, 1,4)
+  Iniciar(cose, 1,5)
+fin

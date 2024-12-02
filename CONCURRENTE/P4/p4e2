@@ -1,0 +1,79 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un cÃ³digo de ejemplo que implementa un
+proceso que recibe un nÃºmero de avenida como parÃ¡metro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso recorrerAvenida
+  variables
+    av, ca, papeles: numero
+  comenzar 
+    mientras (PosCa<100)
+      papeles:= 0
+      mientras ((PosCa<100)&(papeles < 5))
+        mientras((papeles < 5) & (HayPapelEnLaEsquina))
+          tomarPapel
+          papeles:=papeles + 1
+        si ~(HayPapelEnLaEsquina)
+          mover
+      av:= PosAv
+      ca:= PosCa
+      si (papeles = 5)
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        repetir papeles {o 5}
+          depositarPapel
+        Pos(av, ca)
+        LiberarEsquina(50,50)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot productor
+  comenzar
+    recorrerAvenida
+  fin
+  robot consumidor
+  variables
+    ok: boolean
+    cant, ca,seguidas, pa, av: numero
+  comenzar
+    av:=  PosAv
+    ca:= PosCa
+    mientras (seguidas <> 8)
+      Random(cant, 2, 5)
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      pa:=0 
+      mientras ((pa <> cant) & (HayPapelEnLaEsquina))
+        tomarPapel
+        pa:= pa +1
+      si (pa = cant)
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+        repetir cant
+          depositarPapel
+        seguidas:= 0
+      sino{significa que no hay suficientes}
+        repetir pa
+          depositarPapel
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+        seguidas:= seguidas+1
+  fin
+variables
+  pro1: productor
+  pro2: productor
+  co2: consumidor
+  co1: consumidor
+comenzar
+  AsignarArea(pro1, ciudad)
+  AsignarArea(pro2, ciudad)
+  AsignarArea(co1, ciudad)
+  AsignarArea(co2, ciudad)
+  Iniciar(co1, 11,1)
+  Iniciar(co2, 12,1)
+  Iniciar(pro2, 10,1)
+  Iniciar(pro1, 5,1)
+fin

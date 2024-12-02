@@ -1,0 +1,131 @@
+{me da error al informar cual llego primero}
+
+programa ej2p3
+procesos
+  proceso juntarF(ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f+1
+  fin 
+  proceso juntarP(ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:= p+1
+  fin 
+  proceso HacerJuntandoPapeles
+  variables
+    n: numero
+    pa: numero
+  comenzar
+    n:= 5
+    repetir 4
+      repetir 2
+        repetir n
+          mover
+        juntarP(pa)
+        repetir 3
+          derecha
+      repetir 2
+        derecha
+      n:= n-1
+    mover
+    repetir 3
+      derecha
+    BloquearEsquina(16,16)
+    mover
+    {Informar(PosAv, PosCa){!!!!!!!!!!!!!!!!!}
+    EnviarMensaje(1, jefe)
+    LiberarEsquina(16,16) 
+    repetir 2
+      derecha
+    mover
+    n:= 2
+    repetir 4
+      repetir n
+        juntarP(pa)
+        mover
+      repetir 3
+        derecha
+      repetir n
+        juntarP(pa)
+        mover
+      derecha
+      n:= n+1
+  fin
+  proceso HacerJuntandoFlores
+  variables
+    n: numero
+    flo: numero
+  comenzar
+    n:= 5
+    repetir 4
+      repetir 2
+        repetir n
+          mover
+        juntarF(flo)
+        derecha
+      repetir 2
+        derecha
+      n:= n-1
+    mover
+    derecha
+    BloquearEsquina(16,16)
+    mover
+    {Informar(PosAv, PosCa){!!!!!!!!!!!!!!!!!}
+    EnviarMensaje(1, jefe)
+    LiberarEsquina(16,16) 
+    repetir 2
+      derecha
+    mover
+    n:= 2
+    repetir 4
+      repetir 2
+        repetir n
+          mover
+        juntarF(flo)
+        derecha
+      repetir 2
+        derecha
+      n:= n+1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot tipo1
+  comenzar
+    HacerJuntandoFlores 
+    EnviarMensaje(V, jefe) 
+  fin
+  robot tipo2
+  comenzar
+    HacerJuntandoPapeles
+    EnviarMensaje(V, jefe)
+  fin
+  robot tipo3
+  variables 
+    primero, id: numero
+    ganador, ok: boolean
+  comenzar
+    ganador:= F
+    repetir 2
+      RecibirMensaje(id, *)
+      si (ganador = F)
+        ganador:= V
+        primero:= id
+      RecibirMensaje(ok, *)
+    Informar('elPrimerRobotQueLLegoFue',primero)
+  fin
+variables
+  r1: tipo1
+  r2: tipo2
+  jefe: tipo3
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(jefe, 15,1)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 31,1)
+fin

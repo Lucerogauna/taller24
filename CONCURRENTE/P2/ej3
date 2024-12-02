@@ -1,0 +1,87 @@
+programa ejemplo
+{preguntar habia hecho solo el b, si esata bie la logica}
+procesos
+  proceso juntarFlo (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f := f + 1
+  fin
+  proceso juntarPapel (ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p := p + 1
+  fin
+  proceso recorrerFlores(ES f: numero; E pasos: numero)
+  comenzar
+    repetir (pasos-1)
+      juntarFlo(f)
+      mover
+    juntarFlo(f)
+  fin  
+  proceso recorrerPapeles(ES p: numero; E pasos: numero)
+  comenzar
+    repetir (pasos-1)
+      juntarPapel(p)
+      mover
+    juntarPapel(p)
+  fin
+areas
+  areaa1: AreaP (1,1,1,10)
+  areab1: AreaP(5,1,5,10)
+  areaa2: AreaP (1,11,1,20)
+  areab2: AreaP(5,11,5,20)
+robots
+  robot tipo1
+  variables
+    pa: numero
+    llegue: numero
+    total: numero
+  comenzar
+    si (PosCa = 1)
+      recorrerPapeles(pa, 10)
+      EnviarMensaje(1, a2)
+      EnviarMensaje(pa, a2)
+    sino
+      RecibirMensaje(llegue, a1)
+      RecibirMensaje(pa, a1)
+      total:= pa
+      recorrerPapeles(pa, 10)
+      total:= total + pa
+      Informar(pa)
+  fin
+  robot tipo2
+  variables
+    flo: numero
+    llegue: numero
+    total: numero
+  comenzar
+    si (PosCa = 1)
+      recorrerFlores(flo, 10)
+      EnviarMensaje(1, b2)
+      EnviarMensaje(flo, b2)
+    sino
+      RecibirMensaje(llegue, b1)
+      RecibirMensaje(flo, b1)
+      total:= flo
+      recorrerFlores(flo, 10)
+      total:= total + flo
+      Informar(total)
+  fin
+variables
+  a1: tipo1
+  a2: tipo1
+  b1: tipo2
+  b2: tipo2
+  
+comenzar
+  AsignarArea(a1, areaa1)
+  AsignarArea(a2, areaa2)
+  AsignarArea(b2, areab2)
+  AsignarArea(b1, areab1)
+  Iniciar(a1, 1,1)
+  Iniciar(a2, 1,11)
+  Iniciar(b1, 5,1)
+  Iniciar(b2, 5,11)
+fin

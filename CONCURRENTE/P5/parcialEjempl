@@ -1,0 +1,90 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un cÃƒÂ³digo de ejemplo que implementa un
+proceso que recibe un nÃƒÂºmero de avenida como parÃƒÂ¡metro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlo(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:= flores + 1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables 
+    id, flo: numero
+  comenzar
+    RecibirMensaje(id, jefe)
+    repetir 2
+      repetir 9
+        juntarFlo(flo)
+        mover
+      juntarFlo(flo)
+      derecha
+    si (id = 1)
+      EnviarMensaje(flo, r3)
+    sino
+      EnviarMensaje(flo, r4)
+  fin
+  robot robot2
+  variables 
+    id, f: numero
+  comenzar
+    repetir 2
+      derecha
+    RecibirMensaje(id, jefe)
+    si (id = 3)
+      RecibirMensaje(f, r1)
+    sino
+      RecibirMensaje(f, r2)
+    repetir 2
+      repetir 9
+        juntarFlo(f)
+        mover
+      juntarFlo(f)
+      derecha
+    EnviarMensaje(id, jefe)
+    EnviarMensaje(f, jefe)
+  fin
+  robot jef
+  variables
+    id, flo, max, idMax: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    repetir 2
+      RecibirMensaje(id, *)
+      si (id = 3)
+        RecibirMensaje(flo, r3)
+      sino
+        RecibirMensaje(flo, r4)
+      si (flo > max)
+        max:= flo
+        idMax:= id
+    si (idMax = 3 )
+      Informar(1)
+    sino
+      Informar(2)
+  fin
+variables
+  r1,r2: robot1
+  r4, r3: robot2
+  jefe: jef
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r4, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 13,1)
+  Iniciar(r3, 11,10)
+  Iniciar(r4, 23,10)
+  Iniciar(jefe, 30,1)
+fin

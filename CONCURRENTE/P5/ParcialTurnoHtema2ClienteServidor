@@ -1,0 +1,84 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso vaciarFlores(E av: numero; E ca: numero)
+  variables
+    avO,caO:numero
+  comenzar
+    avO:=PosAv
+    caO:= PosCa
+    BloquearEsquina(av,ca)
+    Pos(av, ca)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+    LiberarEsquina(av, ca)
+    Pos(avO, caO)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    intento,av,ca, id: numero
+  comenzar
+    RecibirMensaje(id, fiscal)
+    Random (intento, 2,5)
+    Informar('intentos',intento)
+    repetir intento
+      EnviarMensaje(id,fiscal ){solicitud}
+      RecibirMensaje(av, fiscal)
+      RecibirMensaje(ca, fiscal)
+      vaciarFlores(av,ca)
+    EnviarMensaje(0, fiscal){cuando termina los intentos}
+    EnviarMensaje(intento, fiscal)
+  fin
+  robot fis
+  variables
+    contId, tot,intentos,av, ca, solicitante: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    contId:=0
+    tot:=0
+    mientras (contId < 3)
+      RecibirMensaje(solicitante, *)
+      {Informar('solicito el N ',solicitante)}
+      si (solicitante = 0)
+        contId:= contId + 1
+      sino
+        Random (av, 10,30)
+        Random(ca, 10, 30)
+        si (solicitante = 1)
+          EnviarMensaje(av, r1)
+          EnviarMensaje(ca, r1)
+        sino
+          si(solicitante = 2)
+            EnviarMensaje(av, r2)
+            EnviarMensaje(ca, r2)
+          sino
+            EnviarMensaje(av, r3)
+            EnviarMensaje(ca, r3)
+    Informar('terminaron los',contId)
+    repetir 3
+      RecibirMensaje(intentos,*)
+      tot:= tot + intentos
+    Informar('intentoTotalesEntreTodos',tot)
+  fin
+variables
+  r1,r2,r3: robot1
+  fiscal: fis
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,1)
+  Iniciar(r3, 3,1)
+  Iniciar(fiscal, 9,9)
+fin

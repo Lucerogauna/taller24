@@ -1,0 +1,18 @@
+tengo que encontrar en que posible esquina pueden colisionar y protegerla para no generar un conflicto
+_BLOQUEAR RECURSO
+Dado un recurso compartido por 2 o +, se bloquea ese recurso para que otro proceso no pueda acceder
+_LIBERAR RECURSO
+Dado un recurso bloqueado se _LIBERAR
+
+puede realizarse por el sistema operativo o el programador
+se bloquea solo una vez
+se bloquea solo cuando dos o mas procesos quieren acceder
+SOLO se libera un recurso que ya bloqueamos previamente
+BloquearEsquina(avenida, calle)
+Es importante liberar una esquina lo antes posible
+LiberarEsquina(av,ca o posAv+1,posCa o var, var)
+Deben bloquearse solo cando dos robots quieren acceder
+las esquinas permanecen bloqueadas el menor tiempo posible para que garantice que el pro funcione
+NUNCA SE DEJAN ESQUINAS SIN LiberarEsquina
+ESTA MAL SUPONER SOBRE EL TIEMPO DE EJECUCION DE CADA ROBOT
+Codigo que no tiene conflicto no se bloquea, se bloquea solo al instante que podrian ser accedidos

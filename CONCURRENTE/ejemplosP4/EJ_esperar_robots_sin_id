@@ -1,0 +1,62 @@
+programa ejercicioINVENTADO
+procesos 
+  proceso reco
+  comenzar
+    repetir 10
+      mientras HayPapelEnLaEsquina
+        tomarPapel
+      mover
+  fin
+areas
+  Area1: AreaC(1,1,100,100)
+robots 
+  robot trabajador
+  variables
+    quien, etapa: numero
+    ok: numero
+  comenzar
+    repetir 9
+      reco
+      si (PosAv = 1)
+        EnviarMensaje(V, r2)
+        EnviarMensaje(V, r3)
+      sino 
+        si(PosAv = 3)
+          EnviarMensaje(V, r1)
+          EnviarMensaje(V, r3)
+        sino
+          EnviarMensaje(V, r1)
+          EnviarMensaje(V, r2)
+      {etapa:= etapa + 1}
+      {Informar('etapa', etapa)}
+      si (PosAv = 1)
+        RecibirMensaje (ok, r2)
+        RecibirMensaje(ok, r3)
+        Informar(1)
+      sino
+        si (PosAv = 3)
+          RecibirMensaje (ok, r1)
+          RecibirMensaje(ok, r3)
+          Informar(1)
+        sino
+          RecibirMensaje(ok, r1)
+          RecibirMensaje(ok, r2)
+          Informar(1)
+  fin
+  robot jefe
+  comenzar
+    mover
+  fin
+variables 
+  r1, r2, r3: trabajador
+  r4: jefe
+comenzar
+  AsignarArea(r1, Area1)
+  AsignarArea(r2, Area1)
+  AsignarArea(r3, Area1)
+  AsignarArea(r4, Area1)
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 3, 1)
+  Iniciar(r3, 5, 1)
+  Iniciar(r4, 7, 1)
+fin

@@ -1,0 +1,107 @@
+programa p5e5
+procesos
+  proceso terminamos (E id: numero)
+  variables 
+    ok: boolean
+  comenzar
+    si(id = 1)
+      EnviarMensaje(V, r2)
+      EnviarMensaje(V, r3)
+    sino
+      si  (id = 2)
+        EnviarMensaje(V, r1)
+        EnviarMensaje(V, r3)
+      sino
+        EnviarMensaje(V, r1)
+        EnviarMensaje(V, r2)
+    si (id = 1)
+      RecibirMensaje(ok, r2)
+      RecibirMensaje(ok,r3)
+    sino
+      si (id= 2) 
+        RecibirMensaje(ok, r1)
+        RecibirMensaje(ok,r3)
+      sino
+        RecibirMensaje(ok, r1)
+        RecibirMensaje(ok,r2)
+  fin
+  proceso hacerCliente(E pa: numero)
+  variables
+    avO,caO: numero
+  comenzar
+    avO:= PosAv
+    caO:= PosCa
+    repetir pa
+      BloquearEsquina(100,1)
+      Pos(100,1)
+      tomarPapel
+      Pos(avO,caO)
+      LiberarEsquina(100,1)
+      depositarPapel
+  fin
+  proceso HacerEn100 (ES pa: numero)
+  variables
+    pa: numero
+  comenzar
+    Random(pa, 1, 5)
+    repetir pa
+      BloquearEsquina(100,1)
+      Pos(100,1)
+      depositarPapel
+      Pos(13,1)
+      LiberarEsquina(100,1)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot server
+  variables
+    sigue: boolean
+    papeles,contListos, id: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    contListos:= 0
+    mientras(contListos < 3) {mientras o re 12}
+      RecibirMensaje(id, *)
+      si (id = 0)
+        contListos := contListos +1
+      sino
+        HacerEn100(papeles)
+        si (id = 1)
+          EnviarMensaje(papeles, r1)
+        sino
+          si (id = 2)
+            EnviarMensaje(papeles, r2)
+          sino
+            EnviarMensaje(papeles, r3)
+    Informar(contListos)
+  fin
+  robot client
+  variables
+    quienSoy, p: numero
+  comenzar
+    RecibirMensaje(quienSoy, servidor)
+    repetir 4
+      EnviarMensaje(quienSoy, servidor){solicita papeles}
+      Informar(quienSoy)
+      RecibirMensaje(p, servidor){??}
+      hacerCliente(p)
+    EnviarMensaje(0, servidor)
+  fin
+variables
+  servidor: server
+  r1: client
+  r2: client
+  r3: client
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(servidor, ciudad)
+  Iniciar(r1, 10,1)
+  Iniciar(r2, 11,1)
+  Iniciar(r3, 12,1)
+  Iniciar(servidor, 13,1)
+fin

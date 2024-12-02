@@ -1,0 +1,90 @@
+programa ej2
+{preguntar depositarFlor/// que pasa si en la esquina 50,50 ya habian flores, las cuento?}
+procesos
+  proceso juntarF (ES f: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso hacerEn50 (E f: numero)
+  variables
+    ca,av: numero
+  comenzar
+    ca:= PosCa
+    av:=PosAv
+    repetir f
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+  fin
+  proceso recorrerCallex10(ES f: numero)
+  comenzar
+    repetir 10
+      juntarF(f)
+      mover
+    juntarF(f)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables 
+    ok: boolean
+    id, f: numero
+  comenzar
+    RecibirMensaje(id, fiscal)
+    derecha
+    repetir 9
+      recorrerCallex10(f)
+      hacerEn50 (f)
+      si (id = 1)
+        EnviarMensaje(V, r2)
+        EnviarMensaje(V, r3)
+      sino
+        si (id = 2)
+          EnviarMensaje(V, r1)
+          EnviarMensaje(V, r3)
+        sino
+          EnviarMensaje(V, r1)
+          EnviarMensaje(V, r2)
+      RecibirMensaje(ok, *)
+      RecibirMensaje(ok, *)
+    Informar(PosAv)
+    repetir 9
+      juntarF(f)
+      mover{sincronizar lo ultimo!!!}
+    EnviarMensaje(id, fiscal)
+  fin
+  robot fisc
+  variables
+    id, f: numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    repetir 3
+      RecibirMensaje(id, *)
+    Pos(50,50)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:= f +1
+    Informar('totalDeFloresJuntadas', f)
+  fin
+variables
+  r1: robot1
+  r2: robot1
+  r3: robot1
+  fiscal: fisc
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 1,2)
+  Iniciar(r3, 1,3)
+  Iniciar(fiscal, 1,4)
+fin

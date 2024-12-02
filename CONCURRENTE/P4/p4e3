@@ -1,0 +1,72 @@
+programa e3p4Barrera
+procesos
+  proceso recorrerAvenida(E numAv: numero)
+  comenzar
+    Pos(numAv, 1)
+    repetir 99
+      mover
+  fin
+  proceso jp (ES p: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:= p + 1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables 
+    id, pa: numero
+    ok: boolean
+  comenzar
+    RecibirMensaje(id, coordinador)
+    repetir 19
+      repetir 5
+        jp(pa)
+        mover
+      si (id = 1)
+        EnviarMensaje (V, r2)
+        EnviarMensaje (V, r3)
+      sino
+        si (id = 2)
+          EnviarMensaje (V, r1)
+          EnviarMensaje (V, r3)
+        sino 
+          EnviarMensaje (V, r1)
+          EnviarMensaje (V, r2)
+      si (id = 1)
+        RecibirMensaje(ok, r2)
+        RecibirMensaje(ok, r3)
+      sino 
+        si (id = 2)
+          RecibirMensaje(ok, r1)
+          RecibirMensaje(ok, r3)
+        sino
+          RecibirMensaje(ok, r1)
+          RecibirMensaje(ok, r2)
+    repetir 4
+      jp(pa)
+      mover
+  fin
+  robot cc
+  comenzar 
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+  fin
+variables
+  r1: robot1
+  r2: robot1
+  r3: robot1
+  coordinador: cc
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(coordinador, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,1)
+  Iniciar(r3, 3,1)
+  Iniciar(coordinador, 4,1)
+fin
